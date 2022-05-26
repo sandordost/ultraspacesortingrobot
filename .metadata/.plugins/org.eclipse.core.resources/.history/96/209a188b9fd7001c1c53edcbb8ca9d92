@@ -1,0 +1,14 @@
+package com.sandor;
+
+import javax.swing.*;
+import java.awt.*;
+
+public class Orders extends JInternalFrame {
+    public Orders(){
+        setTitle("Orders");
+        setLayout(new GridLayout(1,1));
+        setBounds(10, 11, 751, 272);
+        JLabel test = new JLabel("Alle orders");
+        add(test);
+    }
+}

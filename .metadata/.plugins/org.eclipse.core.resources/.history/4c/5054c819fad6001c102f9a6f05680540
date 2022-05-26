@@ -1,0 +1,86 @@
+import java.awt.EventQueue;
+
+import javax.swing.JFrame;
+import java.awt.GridLayout;
+import java.awt.GridBagLayout;
+import javax.swing.BoxLayout;
+import javax.swing.JPanel;
+import java.awt.Color;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
+import java.awt.FlowLayout;
+
+public class UltraSpaceSortingMachine {
+
+	private JFrame frame;
+	private final JPanel panel_1 = new JPanel();
+	private JPanel panel_2;
+	private JPanel panel_3;
+	private JButton btnOverzicht;
+	private JButton btnStatus;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					UltraSpaceSortingMachine window = new UltraSpaceSortingMachine();
+					window.frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the application.
+	 */
+	public UltraSpaceSortingMachine() {
+		initialize();
+	}
+
+	/**
+	 * Initialize the contents of the frame.
+	 */
+	private void initialize() {
+		frame = new JFrame();
+		frame.setBounds(100, 100, 783, 450);
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.getContentPane().setLayout(null);
+		
+		JPanel panel = new JPanel();
+		panel.setBackground(new Color(255, 255, 51));
+		panel.setBounds(0, 0, 771, 40);
+		frame.getContentPane().add(panel);
+		panel_1.setBackground(new Color(255, 204, 0));
+		panel_1.setBounds(0, 40, 771, 33);
+		frame.getContentPane().add(panel_1);
+		
+		btnOverzicht = new JButton("Overzicht");
+		btnOverzicht.setBackground(Color.WHITE);
+		btnOverzicht.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		panel_1.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
+		panel_1.add(btnOverzicht);
+		
+		btnStatus = new JButton("Status");
+		btnStatus.setBackground(Color.WHITE);
+		panel_1.add(btnStatus);
+		
+		panel_2 = new JPanel();
+		panel_2.setBackground(new Color(204, 0, 0));
+		panel_2.setBounds(0, 73, 771, 294);
+		frame.getContentPane().add(panel_2);
+		
+		panel_3 = new JPanel();
+		panel_3.setBackground(new Color(255, 255, 0));
+		panel_3.setBounds(0, 367, 771, 48);
+		frame.getContentPane().add(panel_3);
+	}
+}
