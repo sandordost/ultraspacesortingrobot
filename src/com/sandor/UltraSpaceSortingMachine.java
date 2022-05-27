@@ -1,5 +1,6 @@
 package com.sandor;
 
+import com.sandor.hardware.SorteerRobot;
 import com.sandor.internalframes.Orders;
 import com.sandor.internalframes.Overzicht;
 import com.sandor.internalframes.Status;
@@ -19,6 +20,7 @@ import java.awt.Font;
 public class UltraSpaceSortingMachine implements ActionListener {
 
 	public ArduinoConnector arduinoConnector;
+	public static SorteerRobot sorteerRobot;
 	private JFrame frame;
 	private final JPanel panel_1 = new JPanel();
 	private JPanel panel_2;
@@ -61,8 +63,9 @@ public class UltraSpaceSortingMachine implements ActionListener {
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		//Create instance of SorteerRobot
+		sorteerRobot = new SorteerRobot();
 
-		//arduinoConnector = new ArduinoConnector();
 		frame = new JFrame();
 		frame.setBounds(100, 100, 783, 450);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

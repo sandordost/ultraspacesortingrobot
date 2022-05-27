@@ -1,5 +1,6 @@
 package com.sandor.internalframes;
 
+import com.sandor.OrderSorter;
 import com.sandor.UltraSpaceSortingMachine;
 import com.sandor.database.DBOrders;
 import com.sandor.database.DBStockItems;
@@ -240,6 +241,8 @@ public class Orders extends JInternalFrame implements ActionListener {
 
         dConfirm.add(jlDialogTitle);
         dConfirm.add(jbOK);
+
+        OrderSorter orderSorter = new OrderSorter(DBOrders.getOrder(selectedOrderId));
     }
 
     //Add an empty order

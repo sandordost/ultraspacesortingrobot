@@ -9,23 +9,28 @@ public class ArduinoConnector {
     public static int port = 0;
 
     public ArduinoConnector() {
-        System.out.println("List COM ports");
-        for (int i = 0; i < comPorts.length; i++)
-            System.out.println("comPorts[" + i + "] = " + comPorts[i].getDescriptivePortName());
+        if(comPorts.length > 0) {
+            System.out.println("List COM ports");
+            for (int i = 0; i < comPorts.length; i++)
+                System.out.println("comPorts[" + i + "] = " + comPorts[i].getDescriptivePortName());
 
-        comPorts[port].openPort();
-        System.out.println("connected to " + comPorts[port].getDescriptivePortName());
-        comPorts[port].setBaudRate(9600);
+            comPorts[port].openPort();
+            System.out.println("connected to " + comPorts[port].getDescriptivePortName());
+            comPorts[port].setBaudRate(9600);
+        }
+        else{
+            System.out.println("Geen arduino aangesloten");
+        }
     }
 
-    public void moveServo(String degrees) {
-        try {
-            System.out.println("moving to " + degrees);
-            String s = degrees + "\n";
-            byte[] writeBuffer = s.getBytes();
-            comPorts[port].writeBytes(writeBuffer, writeBuffer.length);
-        } catch (Exception e) {
-            e.printStackTrace();
+    public void sendSerialString(String str){
+        if(comPorts.length > 0) {
+            try {
+                byte[] writeBuffer = str.getBytes();
+                comPorts[port].writeBytes(writeBuffer, writeBuffer.length);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
         }
     }
 
