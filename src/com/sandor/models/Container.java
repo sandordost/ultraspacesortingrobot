@@ -65,4 +65,12 @@ public class Container {
         return result;
     }
 
+    public int getTotalWeight(){
+        int weight = 0;
+        for (Product p : products) {
+            weight += p.getWeight();
+        }
+        return weight;
+    }
+
 }

@@ -244,9 +244,9 @@ public class Orders extends JInternalFrame implements ActionListener {
         dConfirm.add(jbOK);
 
         Container[] containers = new Container[3];
-        containers[0] = new Container(13);
-        containers[1] = new Container(13);
-        containers[2] = new Container(13);
+        containers[0] = new Container(9);
+        containers[1] = new Container(9);
+        containers[2] = new Container(9);
 
         OrderSorter orderSorter = new OrderSorter(DBOrders.getOrder(selectedOrderId), containers);
         UltraSpaceSortingMachine.huidigeOrder = DBOrders.getOrder(selectedOrderId);

@@ -2,6 +2,7 @@ package com.sandor.threads;
 
 import com.sandor.ArduinoConnector;
 import com.sandor.UltraSpaceSortingMachine;
+import com.sandor.hardware.InpakRobot;
 import com.sandor.hardware.SorteerRobot;
 import com.sandor.models.Container;
 import com.sandor.models.Order;
@@ -12,6 +13,8 @@ import java.util.ArrayList;
 public class SorteerProces extends Thread{
     SerialReader serialReader = UltraSpaceSortingMachine.serialReader;
     SorteerRobot sorteerRobot = UltraSpaceSortingMachine.sorteerRobot;
+    InpakRobot inpakRobot = UltraSpaceSortingMachine.inpakRobot;
+
     private Container[] objective;
     private Container[] currentContainers;
 
@@ -61,6 +64,7 @@ public class SorteerProces extends Thread{
                 System.out.println("Er is geen bal meer over");
             }
             System.out.println("Bal moet naar container: " + gotoContainer);
+
             UltraSpaceSortingMachine.inpakRobot.sendBallTo(gotoContainer);
 
             try {
@@ -68,6 +72,7 @@ public class SorteerProces extends Thread{
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
+
             System.out.println("Bal doorlaten zodat bal naar container kan ...");
             sorteerRobot.moveGate(3);
             try {
@@ -77,6 +82,8 @@ public class SorteerProces extends Thread{
             }
             System.out.println("Bal is gearriveerd");
             UltraSpaceSortingMachine.status.refreshScreen(objective, currentContainers);
+            System.out.println("Geef de huidige gewichtsitatue weer op de segmentdisplays");
+            inpakRobot.ShowContainersOnDisplays(currentContainers);
         }
     }
 
