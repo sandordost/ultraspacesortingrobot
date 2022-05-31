@@ -6,22 +6,30 @@ import com.sandor.models.Order;
 import com.sandor.models.OrderLine;
 import com.sandor.models.Product;
 
-import java.util.ArrayList;
+import java.lang.reflect.Array;
+import java.util.*;
 
 public class OrderSorter {
 
-    public OrderSorter(Order order){
+    public OrderSorter(Order order, Container[] containers){
         //TODO: sort order
         Product[] products = getProductList(order);
         products = sortProductList(products);
 
-        Container testContainer = new Container(13);
-        Container result = null;
-        while(result == null) {
-            result = getBestFit(products, testContainer);
-            testContainer.decreaseMaxSize(1);
+        int containerCount = 0;
+        int maxContainers = containers.length;
+
+        Product[] leftOver = products;
+        while(leftOver.length > 0 && containerCount < maxContainers) {
+            Container result = null;
+            while (result == null) {
+                result = getBestFit(leftOver, containers[containerCount]);
+                containers[containerCount].decreaseMaxSize(1);
+            }
+            containers[containerCount] = result;
+            leftOver = getLeftover(result, leftOver);
+            containerCount++;
         }
-        System.out.println("test");
     }
 
     //Backtracking algorithm that fits the products as tight as possible in a certain container
@@ -98,5 +106,14 @@ public class OrderSorter {
             return least;
         }
         return -1;
+    }
+
+    public Product[] getLeftover(Container container, Product[] products){
+        ArrayList<Product> result = new ArrayList<>();
+        Collections.addAll(result, products);
+        for(Product p : container.getProducts()) {
+            result.remove(p);
+        }
+        return result.toArray(new Product[0]);
     }
 }

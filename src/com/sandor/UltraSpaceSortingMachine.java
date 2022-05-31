@@ -1,10 +1,13 @@
 package com.sandor;
 
+import com.sandor.hardware.InpakRobot;
 import com.sandor.hardware.SorteerRobot;
 import com.sandor.internalframes.Orders;
 import com.sandor.internalframes.Overzicht;
 import com.sandor.internalframes.Status;
 import com.sandor.internalframes.Verwerkt;
+import com.sandor.models.Order;
+import com.sandor.threads.SerialReader;
 
 import java.awt.EventQueue;
 import javax.swing.JFrame;
@@ -19,8 +22,11 @@ import java.awt.Font;
 
 public class UltraSpaceSortingMachine implements ActionListener {
 
-	public ArduinoConnector arduinoConnector;
+	public static ArduinoConnector arduinoConnector;
 	public static SorteerRobot sorteerRobot;
+	public static SerialReader serialReader;
+	public static InpakRobot inpakRobot;
+
 	private JFrame frame;
 	private final JPanel panel_1 = new JPanel();
 	private JPanel panel_2;
@@ -32,9 +38,10 @@ public class UltraSpaceSortingMachine implements ActionListener {
 	private JLabel lblNewLabel;
 	private JLabel lblNewLabel_1;
 	private Overzicht overzicht;
-	private Status status;
+	public static Status status;
 	private Orders orders;
 	private Verwerkt verwerkt;
+	public static Order huidigeOrder;
 
 	/**
 	 * Launch the application.
@@ -64,7 +71,14 @@ public class UltraSpaceSortingMachine implements ActionListener {
 	 */
 	private void initialize() {
 		//Create instance of SorteerRobot
+		arduinoConnector = new ArduinoConnector();
 		sorteerRobot = new SorteerRobot();
+		serialReader = new SerialReader();
+		inpakRobot = new InpakRobot();
+
+		if(arduinoConnector.arduinoIsAvailable()){
+			serialReader.start();
+		}
 
 		frame = new JFrame();
 		frame.setBounds(100, 100, 783, 450);

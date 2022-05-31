@@ -39,4 +39,8 @@ public class Product {
     public void setWeight(int weight) {
         this.weight = weight;
     }
+
+    public String toString(){
+        return color + " (" + weight + "g)";
+    }
 }

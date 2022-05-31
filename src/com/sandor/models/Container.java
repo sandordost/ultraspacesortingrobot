@@ -49,5 +49,20 @@ public class Container {
         return (getAvailableSpace() - product.getWeight()) >= 0;
     }
 
+    public String productsToString(){
+        String result = "";
+        for(Product p : products){
+            if(p.getColor() == "Red"){
+                result += "Rood - ";
+            }
+            else if(p.getColor() == "Green"){
+                result += "Groen - ";
+            }
+            else if(p.getColor() == "Blue"){
+                result += "Blauw - ";
+            }
+        }
+        return result;
+    }
 
 }

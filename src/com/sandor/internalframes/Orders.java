@@ -6,7 +6,10 @@ import com.sandor.database.DBOrders;
 import com.sandor.database.DBStockItems;
 import com.sandor.database.DB_Global;
 import com.sandor.dialogs.AddProductDialog;
+import com.sandor.hardware.SorteerRobot;
+import com.sandor.models.Container;
 import com.sandor.models.Order;
+import com.sandor.threads.SorteerProces;
 
 import javax.swing.*;
 import javax.swing.border.BevelBorder;
@@ -211,8 +214,6 @@ public class Orders extends JInternalFrame implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == btnVerwerkOrder){
             verwerkOrder(selectedOrderId);
-            Order o = DBOrders.getOrder(selectedOrderId);
-            System.out.println(o.getCustomer());
         }
         else if(e.getSource() == btnNieuweOrder){
             addOrder();
@@ -242,7 +243,19 @@ public class Orders extends JInternalFrame implements ActionListener {
         dConfirm.add(jlDialogTitle);
         dConfirm.add(jbOK);
 
-        OrderSorter orderSorter = new OrderSorter(DBOrders.getOrder(selectedOrderId));
+        Container[] containers = new Container[3];
+        containers[0] = new Container(13);
+        containers[1] = new Container(13);
+        containers[2] = new Container(13);
+
+        OrderSorter orderSorter = new OrderSorter(DBOrders.getOrder(selectedOrderId), containers);
+        UltraSpaceSortingMachine.huidigeOrder = DBOrders.getOrder(selectedOrderId);
+
+
+        SorteerProces sorteerProces = new SorteerProces();
+        sorteerProces.setObjective(containers);
+        UltraSpaceSortingMachine.status.refreshScreen(containers, sorteerProces.getCurrentContainers());
+        sorteerProces.start();
     }
 
     //Add an empty order
