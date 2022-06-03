@@ -2,6 +2,7 @@ package com.sandor.threads;
 
 import com.sandor.ArduinoConnector;
 import com.sandor.UltraSpaceSortingMachine;
+import com.sandor.database.DBOrders;
 import com.sandor.hardware.InpakRobot;
 import com.sandor.hardware.SorteerRobot;
 import com.sandor.models.Container;
@@ -14,6 +15,12 @@ public class SorteerProces extends Thread{
     SerialReader serialReader = UltraSpaceSortingMachine.serialReader;
     SorteerRobot sorteerRobot = UltraSpaceSortingMachine.sorteerRobot;
     InpakRobot inpakRobot = UltraSpaceSortingMachine.inpakRobot;
+
+    public void setCurrentOrder(int orderId) {
+        this.currentOrder = DBOrders.getOrder(orderId);
+    }
+
+    Order currentOrder;
 
     private Container[] objective;
     private Container[] currentContainers;
@@ -85,6 +92,20 @@ public class SorteerProces extends Thread{
             System.out.println("Geef de huidige gewichtsitatue weer op de segmentdisplays");
             inpakRobot.ShowContainersOnDisplays(currentContainers);
         }
+        try{
+            sleep(1500);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        System.out.println("Poorten sluiten");
+        inpakRobot.sendBallTo(-1);
+
+        System.out.println("Order verwerken in DB");
+        DBOrders.verwerkOrder(currentOrder.getId());
+
+        System.out.println("Vernieuw order / verwerk schermen");
+        UltraSpaceSortingMachine.orders.updateOrderList();
+        UltraSpaceSortingMachine.verwerkt.updateOrderList();
     }
 
     public void setObjective(Container[] objective) {

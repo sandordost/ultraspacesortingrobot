@@ -26,6 +26,8 @@ public class UltraSpaceSortingMachine implements ActionListener {
 	public static SorteerRobot sorteerRobot;
 	public static SerialReader serialReader;
 	public static InpakRobot inpakRobot;
+	public static Orders orders;
+	public static Verwerkt verwerkt;
 
 	private JFrame frame;
 	private final JPanel panel_1 = new JPanel();
@@ -39,8 +41,6 @@ public class UltraSpaceSortingMachine implements ActionListener {
 	private JLabel lblNewLabel_1;
 	private Overzicht overzicht;
 	public static Status status;
-	private Orders orders;
-	private Verwerkt verwerkt;
 	public static Order huidigeOrder;
 
 	/**
@@ -144,7 +144,7 @@ public class UltraSpaceSortingMachine implements ActionListener {
 		panel_2.add(orders);
 		orders.setVisible(false);
 
-		verwerkt = new Verwerkt();
+		verwerkt = new Verwerkt(this);
 		panel_2.add(verwerkt);
 		verwerkt.setVisible(false);
 		

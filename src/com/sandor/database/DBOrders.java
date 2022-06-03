@@ -8,10 +8,12 @@ import java.util.ArrayList;
 
 public class DBOrders {
 
-    public static Integer[] getOrderIds(){
+    public static Integer[] getOrderIds(boolean showVerwerktOnly){
         ArrayList<Integer> orderIDs = new ArrayList<>();
 
-        ResultSet resultSet = DBConnection.performQuerry("SELECT * FROM orders");
+        int verwerkt = 0;
+        if(showVerwerktOnly) verwerkt = 1;
+        ResultSet resultSet = DBConnection.performQuerry("SELECT * FROM orders WHERE verwerkt = " + verwerkt);
 
         try {
             //Proces result set
@@ -134,5 +136,9 @@ public class DBOrders {
         }
         o.setOrderLines(oLines);
         return o;
+    }
+
+    public static void verwerkOrder(int orderId){
+        DBConnection.performUpdate("UPDATE `orders` SET `verwerkt` = '1' WHERE `orders`.`OrderID` = " + orderId);
     }
 }

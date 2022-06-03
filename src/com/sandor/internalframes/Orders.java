@@ -166,7 +166,7 @@ public class Orders extends JInternalFrame implements ActionListener {
     }
 
     public void updateOrderList(){
-        Integer[] orderIdList = DBOrders.getOrderIds();
+        Integer[] orderIdList = DBOrders.getOrderIds(false);
 
         jlOrderList.setModel(new AbstractListModel() {
             @Override
@@ -235,7 +235,7 @@ public class Orders extends JInternalFrame implements ActionListener {
         dConfirm.setVisible(true);
         dConfirm.setLayout(null);
 
-        JLabel jlDialogTitle = new JLabel("Je order is verwerkt");
+        JLabel jlDialogTitle = new JLabel("Je order wordt verwerkt");
         jlDialogTitle.setBounds(10,10, 150, 20);
         JButton jbOK = new JButton("OK");
         jbOK.setBounds(10,40, 100, 30);
@@ -254,6 +254,7 @@ public class Orders extends JInternalFrame implements ActionListener {
 
         SorteerProces sorteerProces = new SorteerProces();
         sorteerProces.setObjective(containers);
+        sorteerProces.setCurrentOrder(orderId);
         UltraSpaceSortingMachine.status.refreshScreen(containers, sorteerProces.getCurrentContainers());
         sorteerProces.start();
     }
